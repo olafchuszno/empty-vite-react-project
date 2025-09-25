@@ -24,7 +24,7 @@
 
       async function getBootstrapToken() {
         try {
-          const bootstrapToken = await fetch(API_URL + '/api/bootstrap-token', {
+          const bootstrapToken = await fetch(`${API_URL}/api/bootstrap-token`, {
             credentials: 'include',
           }).then((response) => response.text());
 
