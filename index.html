@@ -5,18 +5,65 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
-    <script src="https://cdn.tailwindcss.com/?icon"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script
-      async
-      data-locale="uk-UA"
-      data-theme="dark"
-      data-color="#CCCCCC"
-      src="https://ai-widget-backend-ts-production-c24b.up.railway.app/bundle"
-      data-logo="https%3A%2F%2Ft3.gstatic.com%2FfaviconV2%3Fclient%3DSOCIAL%26type%3DFAVICON%26fallback_opts%3DTYPE%2CSIZE%2CURL%26url%3Dhttp%3A%2F%2Fmicrosoft.com%26size%3D64"
-    ></script>
+    <button onclick="getBootstrapToken()">Get bootstrap token</button>
+
+    <!-- <button onclick="reloadScript()">Fetch bundle</button>
+
+    <button onclick="createAiWidgetScript()">
+      Remove and create script again
+    </button> -->
+
+    <script async>
+      const API_URL =
+        'https://ai-widget-backend-ts-production-c24b.up.railway.app/';
+
+      async function getBootstrapToken() {
+        try {
+          const bootstrapToken = await fetch(API_URL + '/api/bootstrap-token', {
+            credentials: 'include',
+          }).then((response) => response.text());
+
+          createAiWidgetScript(bootstrapToken);
+        } catch (error) {}
+      }
+
+      async function reloadScript() {
+        const scriptElement = document.getElementById('ai-widget-script');
+        scriptElement.setAttribute('data-locale', 'pl-PL');
+        const newToken = 'someToken';
+        const src = `${API_URL}/api/bundle?token=${newToken}&t=${Date.now()}`;
+        try {
+          const module = await import(src);
+          // Handle the loaded module
+        } catch (e) {
+          console.error('Failed to load script:', e);
+        }
+      }
+
+      function createAiWidgetScript(bootstrapToken) {
+        const script = document.createElement('script');
+        script.id = 'ai-widget-script';
+        script.async = true;
+        script.setAttribute('data-tenant', 'someTenant');
+        script.setAttribute('data-locale', 'en-US');
+        script.setAttribute('data-theme', 'light');
+        script.setAttribute('data-token', bootstrapToken || '');
+        script.src = `'${API_URL}/api/bundle`;
+
+        document.body.appendChild(script);
+      }
+    </script>
+    <!-- <script
+      crossorigin="use-credentials"
+      id="ai-widget-script"
+      data-tenant="someTenant"
+      data-locale="en-US"
+      data-theme="light"
+      src="http://localhost:3000/bundle"
+    ></script> -->
   </body>
 </html>
