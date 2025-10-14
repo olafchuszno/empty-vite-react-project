@@ -18,7 +18,7 @@
     </button> -->
 
     <script async>
-      const IS_DEV = false;
+      const IS_DEV = document.location.hostname.includes('localhost');
 
       const API_URL = IS_DEV
         ? 'http://localhost:3000'
@@ -60,7 +60,7 @@
         script.async = true;
         script.setAttribute('data-tenant', 'someTenant');
         script.setAttribute('data-locale', 'en-US');
-        script.setAttribute('data-theme', 'dark');
+        script.setAttribute('data-theme', 'light');
         script.setAttribute('data-token', bootstrapToken || '');
         script.src = getApiUrl('/api/bundle');
 
