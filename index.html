@@ -19,14 +19,24 @@
     </button> -->
 
     <script async>
-      const API_URL =
-        'https://ai-widget-backend-ts-production-c24b.up.railway.app';
+      const IS_DEV = document.location.hostname.includes('localhost');
+
+      const API_URL = IS_DEV
+        ? 'http://localhost:3000'
+        : 'https://ai-widget-backend-ts-production-c24b.up.railway.app';
+
+      const getApiUrl = (pathName) => {
+        return `${API_URL}${pathName}`;
+      };
 
       async function getBootstrapToken() {
         try {
-          const bootstrapToken = await fetch(`${API_URL}/api/bootstrap-token`, {
-            credentials: 'include',
-          }).then((response) => response.text());
+          const bootstrapToken = await fetch(
+            getApiUrl('/api/bootstrap-token'),
+            {
+              credentials: 'include',
+            }
+          ).then((response) => response.text());
 
           createAiWidgetScript(bootstrapToken);
         } catch (error) {}
@@ -36,7 +46,7 @@
         const scriptElement = document.getElementById('ai-widget-script');
         scriptElement.setAttribute('data-locale', 'pl-PL');
         const newToken = 'someToken';
-        const src = `${API_URL}/api/bundle?token=${newToken}&t=${Date.now()}`;
+        const src = getApiUrl(`/api/bundle?token=${newToken}&t=${Date.now()}`);
         try {
           const module = await import(src);
           // Handle the loaded module
@@ -53,7 +63,7 @@
         script.setAttribute('data-locale', 'en-US');
         script.setAttribute('data-theme', 'light');
         script.setAttribute('data-token', bootstrapToken || '');
-        script.src = `${API_URL}/api/bundle`;
+        script.src = getApiUrl('/api/bundle');
 
         document.body.appendChild(script);
       }
