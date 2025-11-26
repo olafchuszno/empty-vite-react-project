@@ -10,7 +10,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <button onclick="getBootstrapToken()">Get bootstrap token</button>
+    <!-- <button onclick="getBootstrapToken()">Get bootstrap token</button> -->
 
     <!-- <button onclick="reloadScript()">Fetch bundle</button>
 
@@ -18,12 +18,12 @@
       Remove and create script again
     </button> -->
 
-    <script async>
+    <!-- <script async>
       const IS_DEV = document.location.hostname.includes('localhost');
 
       const API_URL = IS_DEV
         ? 'http://localhost:5278'
-        : 'https://ai-widget-backend-ts-production-c24b.up.railway.app';
+        : 'https://smart-pwr-by-ai-web-widget-etaycgbugjgpb4h8.westeurope-01.azurewebsites.net';
 
       const getApiUrl = (pathName) => {
         return `${API_URL}${pathName}`;
@@ -67,7 +67,14 @@
 
         document.body.appendChild(script);
       }
-    </script>
+    </script> -->
+    <script
+      src="https://ai-widget-backend-ts-production-c24b.up.railway.app"
+      id="ai-widget-script"
+      data-tenant="async"
+      data-locale="en-US"
+      data-theme="light"
+    ></script>
     <!-- <script
       crossorigin="use-credentials"
       id="ai-widget-script"
